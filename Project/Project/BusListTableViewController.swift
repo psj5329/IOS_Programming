@@ -13,13 +13,18 @@ class BusListTableViewController: UITableViewController, XMLParserDelegate {
     @IBOutlet var tbBusData: UITableView!
     
     var url : String?
+    var strurl : String?
     
     var parser = XMLParser()
     var posts = NSMutableArray()
     var elements = NSMutableDictionary()
     var element = NSString()
     var busRouteNm = NSMutableString()
+    var busRouteId = NSMutableString()
     var routeType = NSMutableString()
+    
+    var Busname = ""
+    var Busname_utf8 = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +35,7 @@ class BusListTableViewController: UITableViewController, XMLParserDelegate {
     func beginParsing()
     {
         posts = []
-        parser = XMLParser(contentsOf: (URL(string:url!))!)!
+        parser = XMLParser(contentsOf: (URL(string:strurl!))!)!
         parser.delegate = self
         parser.parse()
         tbBusData!.reloadData()
@@ -44,6 +49,8 @@ class BusListTableViewController: UITableViewController, XMLParserDelegate {
             elements = [:]
             busRouteNm = NSMutableString()
             busRouteNm = ""
+            busRouteId = NSMutableString()
+            busRouteId = ""
             routeType = NSMutableString()
             routeType = ""
         }
@@ -52,6 +59,8 @@ class BusListTableViewController: UITableViewController, XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         if element.isEqual(to: "busRouteNm") {
             busRouteNm.append(string)
+        }  else if element.isEqual(to: "busRouteId"){
+            busRouteId.append(string)
         } else if element.isEqual(to: "routeType"){
             routeType.append(string)
         }
@@ -61,6 +70,9 @@ class BusListTableViewController: UITableViewController, XMLParserDelegate {
         if (elementName as NSString).isEqual(to: "itemList") {
             if !busRouteNm.isEqual(nil){
                 elements.setObject(busRouteNm, forKey: "busRouteNm" as NSCopying)
+            }
+            if !busRouteId.isEqual(nil){
+                elements.setObject(busRouteId, forKey: "busRouteId" as NSCopying)
             }
             if !routeType.isEqual(nil){
                 elements.setObject(routeType, forKey: "routeType" as NSCopying)
@@ -133,6 +145,39 @@ class BusListTableViewController: UITableViewController, XMLParserDelegate {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        /*if segue.identifier == "segueToMapView"{
+            if let mapViewController = segue.destination as? MapViewController{
+                mapViewController.posts = posts
+            }
+        }*/
+        
+        if segue.identifier == "segueToBusDetail"{
+            if let cell = sender as? UITableViewCell{
+                let indexPath = tableView.indexPath(for: cell)
+                Busname = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "busRouteId") as! NSString as String
+                
+                Busname_utf8 = Busname.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+                
+                if let busInfoTableViewController = segue.destination as?
+                    BusInfoTableViewController{
+                    busInfoTableViewController.url = url! + "&busRouteId=" + Busname_utf8
+                }
+            }
+        }
+    }
+    
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToViewController"{
+            if let navController = segue.destination as? UINavigationController {
+                if let busInfoTableViewController = navController.topViewController as?
+                    BusInfoTableViewController {
+                    strSrch = searchNum.text!
+                    busInfoTableViewController.url = url + strSrch
+                }
+            }
+        }
+    }*/
 
     /*
     // Override to support conditional editing of the table view.

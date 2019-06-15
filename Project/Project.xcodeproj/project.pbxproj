@@ -14,6 +14,8 @@
 		A104FE84229AB40C0068CCB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A104FE82229AB40C0068CCB1 /* LaunchScreen.storyboard */; };
 		A10668AF22A35D3300BA0818 /* BusListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10668AE22A35D3300BA0818 /* BusListTableViewController.swift */; };
 		A10668B122A4629400BA0818 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10668B022A4629400BA0818 /* MapViewController.swift */; };
+		A10668B322A4707B00BA0818 /* BusInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10668B222A4707B00BA0818 /* BusInfoTableViewController.swift */; };
+		A10668B522A4796D00BA0818 /* BusInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10668B422A4796D00BA0818 /* BusInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		A104FE85229AB40C0068CCB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10668AE22A35D3300BA0818 /* BusListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusListTableViewController.swift; sourceTree = "<group>"; };
 		A10668B022A4629400BA0818 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A10668B222A4707B00BA0818 /* BusInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusInfoTableViewController.swift; sourceTree = "<group>"; };
+		A10668B422A4796D00BA0818 /* BusInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				A104FE85229AB40C0068CCB1 /* Info.plist */,
 				A10668AE22A35D3300BA0818 /* BusListTableViewController.swift */,
 				A10668B022A4629400BA0818 /* MapViewController.swift */,
+				A10668B222A4707B00BA0818 /* BusInfoTableViewController.swift */,
+				A10668B422A4796D00BA0818 /* BusInfoViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -143,8 +149,10 @@
 			files = (
 				A10668AF22A35D3300BA0818 /* BusListTableViewController.swift in Sources */,
 				A104FE7C229AB40C0068CCB1 /* ViewController.swift in Sources */,
+				A10668B322A4707B00BA0818 /* BusInfoTableViewController.swift in Sources */,
 				A104FE7A229AB40C0068CCB1 /* AppDelegate.swift in Sources */,
 				A10668B122A4629400BA0818 /* MapViewController.swift in Sources */,
+				A10668B522A4796D00BA0818 /* BusInfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

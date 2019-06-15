@@ -8,33 +8,178 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
-    @IBOutlet weak var searchNum: UITextField!
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, XMLParserDelegate {
     
-    @IBAction func doneToSearchViewController(segue:UIStoryboardSegue){
-        
-    }
+    @IBOutlet weak var SearchBusList: UITableView!
+    @IBOutlet weak var searchbar: UISearchBar!
+    
+    
+    var url : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
+    var strurl : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
+    
+    var parser = XMLParser()
+    var posts = NSMutableArray()
+    var elements = NSMutableDictionary()
+    var element = NSString()
+    var busRouteNm = NSMutableString()
+    var busRouteId = NSMutableString()
+    var routeType = NSMutableString()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.SearchBusList.dataSource = self
+        self.SearchBusList.delegate = self
+        self.searchbar.delegate = self
+        self.searchbar.placeholder = "Input Bus Number"
+        
+        beginParsing()
     }
-
     
-    var url : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D&strSrch="
+    func beginParsing()
+    {
+        posts = []
+        parser = XMLParser(contentsOf: (URL(string:strurl))!)!
+        parser.delegate = self
+        parser.parse()
+        SearchBusList.reloadData()
+    }
     
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        element = elementName as NSString
+        if(elementName as NSString).isEqual(to: "itemList")
+        {
+            elements = NSMutableDictionary()
+            elements = [:]
+            busRouteNm = NSMutableString()
+            busRouteNm = ""
+            busRouteId = NSMutableString()
+            busRouteId = ""
+            routeType = NSMutableString()
+            routeType = ""
+        }
+    }
     
-    var strSrch : String = "";
-    var busRouteId : String = "";
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        if element.isEqual(to: "busRouteNm") {
+            busRouteNm.append(string)
+        }  else if element.isEqual(to: "busRouteId"){
+            busRouteId.append(string)
+        } else if element.isEqual(to: "routeType"){
+            routeType.append(string)
+        }
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if (elementName as NSString).isEqual(to: "itemList") {
+            if !busRouteNm.isEqual(nil){
+                elements.setObject(busRouteNm, forKey: "busRouteNm" as NSCopying)
+            }
+            if !busRouteId.isEqual(nil){
+                elements.setObject(busRouteId, forKey: "busRouteId" as NSCopying)
+            }
+            if !routeType.isEqual(nil){
+                elements.setObject(routeType, forKey: "routeType" as NSCopying)
+            }
+            
+            posts.add(elements)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
+       
+       cell.textLabel?.text = (posts.object(at: indexPath.row) as AnyObject).value(forKey: "busRouteNm") as! NSString as String
+       cell.detailTextLabel?.text = (posts.object(at: indexPath.row) as AnyObject).value(forKey: "routeType") as! NSString as String
+       
+       if(cell.detailTextLabel?.text == "1")
+       {
+           cell.detailTextLabel?.text = "공항"
+       }
+       else if(cell.detailTextLabel?.text == "2")
+       {
+           cell.detailTextLabel?.text = "마을"
+       }
+       else if(cell.detailTextLabel?.text == "3")
+       {
+           cell.detailTextLabel?.text = "간선"
+       }
+       else if(cell.detailTextLabel?.text == "4")
+       {
+           cell.detailTextLabel?.text = "지선"
+       }
+       else if(cell.detailTextLabel?.text == "5")
+       {
+           cell.detailTextLabel?.text = "순환"
+       }
+       else if(cell.detailTextLabel?.text == "6")
+       {
+           cell.detailTextLabel?.text = "광역"
+       }
+       else if(cell.detailTextLabel?.text == "7")
+       {
+           cell.detailTextLabel?.text = "인천"
+       }
+       else if(cell.detailTextLabel?.text == "8")
+       {
+           cell.detailTextLabel?.text = "경기"
+       }
+       else if(cell.detailTextLabel?.text == "9")
+       {
+           cell.detailTextLabel?.text = "폐지"
+       }
+       else if(cell.detailTextLabel?.text == "0")
+       {
+           cell.detailTextLabel?.text = "공용"
+       }
+       
+       return cell
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        strurl = url + "&strSrch=" + self.searchbar.text!
+        beginParsing()
+        SearchBusList.reloadData()
+    }
+    
+    // 입력 시작과 동시에 검색모드 취소(x)할 수 잇게 함
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.strurl = self.url + "&strSrch=" + self.searchbar.text!
+        self.searchbar.showsCancelButton = true
+        
+        beginParsing()
+    }
+    
+    // 입력 도중 캔슬 시 호출, 텍스트 내용 초기화하고 캔슬버튼 숨기고 키보드 내림
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchbar.showsCancelButton = false
+        self.searchbar.text = ""
+        self.searchbar.resignFirstResponder()
+    }
+    
+    // 키보드의 검색이나 돋보기 아이콘 누르면 호출
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Search text : ", self.searchbar.text!)
+        
+        self.strurl = self.url + "&strSrch=" + self.searchbar.text!
+        self.searchbar.showsCancelButton = false
+        self.searchbar.text = ""
+        self.searchbar.resignFirstResponder()
+        
+        beginParsing()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueToTableView"{
-            if let navController = segue.destination as? UINavigationController {
-                if let busListTableViewController = navController.topViewController as?
-                    BusListTableViewController {
-                    strSrch = searchNum.text!
-                    busListTableViewController.url = url + strSrch
+        if segue.identifier == "segueToInfoView"{
+            if let cell = sender as? UITableViewCell{
+                let indexPath = tableView.indexPath(for: cell)
+                
+                if let busInfoViewController = segue.destination as? BusInfoViewController{
+                    busInfoViewController.url = url + "&strSrch=" + self.searchbar.text!
                 }
             }
         }
