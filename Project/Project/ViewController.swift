@@ -25,6 +25,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var busRouteId = NSMutableString()
     var routeType = NSMutableString()
     
+    var busNum_utf8: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,65 +95,93 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
        
-       cell.textLabel?.text = (posts.object(at: indexPath.row) as AnyObject).value(forKey: "busRouteNm") as! NSString as String
+        cell.textLabel?.text = "버스 번호 : " + ((posts.object(at: indexPath.row) as AnyObject).value(forKey: "busRouteNm") as! NSString as String)
        cell.detailTextLabel?.text = (posts.object(at: indexPath.row) as AnyObject).value(forKey: "routeType") as! NSString as String
        
        if(cell.detailTextLabel?.text == "1")
        {
-           cell.detailTextLabel?.text = "공항"
+        cell.detailTextLabel?.text = "버스 유형 : 공항"
        }
        else if(cell.detailTextLabel?.text == "2")
        {
-           cell.detailTextLabel?.text = "마을"
+           cell.detailTextLabel?.text = "버스 유형 : 마을"
        }
        else if(cell.detailTextLabel?.text == "3")
        {
-           cell.detailTextLabel?.text = "간선"
+           cell.detailTextLabel?.text = "버스 유형 : 간선"
        }
        else if(cell.detailTextLabel?.text == "4")
        {
-           cell.detailTextLabel?.text = "지선"
+           cell.detailTextLabel?.text = "버스 유형 : 지선"
        }
        else if(cell.detailTextLabel?.text == "5")
        {
-           cell.detailTextLabel?.text = "순환"
+           cell.detailTextLabel?.text = "버스 유형 : 순환"
        }
        else if(cell.detailTextLabel?.text == "6")
        {
-           cell.detailTextLabel?.text = "광역"
+           cell.detailTextLabel?.text = "버스 유형 : 광역"
        }
        else if(cell.detailTextLabel?.text == "7")
        {
-           cell.detailTextLabel?.text = "인천"
+           cell.detailTextLabel?.text = "버스 유형 : 인천"
        }
        else if(cell.detailTextLabel?.text == "8")
        {
-           cell.detailTextLabel?.text = "경기"
+           cell.detailTextLabel?.text = "버스 유형 : 경기"
        }
        else if(cell.detailTextLabel?.text == "9")
        {
-           cell.detailTextLabel?.text = "폐지"
+           cell.detailTextLabel?.text = "버스 유형 : 폐지"
        }
        else if(cell.detailTextLabel?.text == "0")
        {
-           cell.detailTextLabel?.text = "공용"
+           cell.detailTextLabel?.text = "버스 유형 : 공용"
        }
        
        return cell
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        strurl = url + "&strSrch=" + self.searchbar.text!
-        beginParsing()
-        SearchBusList.reloadData()
+        var searchText : URL!
+        var newUrl : String!
+        if self.searchbar.text != ""{
+            searchText = URL(string: self.searchbar.text!.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)!)!
+            
+            newUrl = url + "&strSrch=" + (searchText).absoluteString
+            strurl = newUrl
+            
+            beginParsing()
+            SearchBusList.reloadData()
+        }
+        else {
+            strurl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
+            beginParsing()
+            SearchBusList.reloadData()
+        }
+        
     }
     
     // 입력 시작과 동시에 검색모드 취소(x)할 수 잇게 함
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.strurl = self.url + "&strSrch=" + self.searchbar.text!
-        self.searchbar.showsCancelButton = true
+        var searchText : URL!
+        var newUrl : String!
+        if self.searchbar.text != ""{
+            searchText = URL(string: self.searchbar.text!.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)!)!
+            
+            newUrl = url + "&strSrch=" + (searchText).absoluteString
+            strurl = newUrl
+            
+            self.searchbar.showsCancelButton = true
+            beginParsing()
+        }
         
-        beginParsing()
+        else {
+            strurl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
+            self.searchbar.showsCancelButton = true
+            beginParsing()
+        }
+
     }
     
     // 입력 도중 캔슬 시 호출, 텍스트 내용 초기화하고 캔슬버튼 숨기고 키보드 내림
@@ -164,8 +194,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // 키보드의 검색이나 돋보기 아이콘 누르면 호출
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("Search text : ", self.searchbar.text!)
-        
+       
         self.strurl = self.url + "&strSrch=" + self.searchbar.text!
+        
+        let tempUrl = self.strurl //한글이 들어간 URL 주소
+        let tempurl2:URL = URL(string: tempUrl.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)!)!
+        
+        strurl = tempurl2.absoluteString
+        
         self.searchbar.showsCancelButton = false
         self.searchbar.text = ""
         self.searchbar.resignFirstResponder()
@@ -175,11 +211,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToInfoView"{
-            if let cell = sender as? UITableViewCell{
-                let indexPath = tableView.indexPath(for: cell)
-                
-                if let busInfoViewController = segue.destination as? BusInfoViewController{
-                    busInfoViewController.url = url + "&strSrch=" + self.searchbar.text!
+                if let cell = sender as? UITableViewCell{
+                    let indexPath = SearchBusList.indexPath(for: cell)
+                    if let busInfoViewController = segue.destination as? BusInfoViewController{
+                        var busNum = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "busRouteNm")as! NSString as String
+                        busNum_utf8 = busNum.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+                        busInfoViewController.url = url + "&strSrch=" + busNum
+                        
+                        // $$한글이 안된다 나중에 고치자
                 }
             }
         }
