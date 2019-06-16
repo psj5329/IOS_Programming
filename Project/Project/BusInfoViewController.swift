@@ -203,7 +203,7 @@ class BusInfoViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BusCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BusRouteCell", for: indexPath)
         //let cell = UITableViewCell(style: UITableViewCell.CellStyle.value2, reuseIdentifier: nil)
         
         cell.textLabel?.text = posts[indexPath.row]
@@ -217,6 +217,20 @@ class BusInfoViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToMapView"{
+            if let mapViewController = segue.destination as? MapViewController{
+                mapViewController.posts = posts as! NSMutableArray
+            }
+        }
+        
+        if segue.identifier == "segueToInfoView"{
+            if let infoViewController = segue.destination as? BusInfoTableViewController{
+                infoViewController.posts = posts
+            }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

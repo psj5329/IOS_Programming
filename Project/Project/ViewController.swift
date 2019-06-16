@@ -214,11 +214,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 if let cell = sender as? UITableViewCell{
                     let indexPath = SearchBusList.indexPath(for: cell)
                     if let busInfoViewController = segue.destination as? BusInfoViewController{
-                        var busNum = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "busRouteNm")as! NSString as String
+                        let busNum = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "busRouteNm")as! NSString as String
                         busNum_utf8 = busNum.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-                        busInfoViewController.url = url + "&strSrch=" + busNum
-                        
-                        // $$한글이 안된다 나중에 고치자
+                        busInfoViewController.url = url + "&strSrch=" + busNum_utf8
                 }
             }
         }

@@ -2,20 +2,21 @@
 //  BusInfoTableViewController.swift
 //  Project
 //
-//  Created by kpugame on 2019. 6. 3..
+//  Created by kpugame on 2019. 6. 17..
 //  Copyright © 2019년 SooJeong Park. All rights reserved.
 //
 
 import UIKit
 
 class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
-
+    
     @IBOutlet var detailTableView: UITableView!
-    var url : String?
+    
+    //var url : String?
     
     var parser = XMLParser()
     
-    let postname : [String] = ["노선 ID", "노선명", "노선 길이(km)", "노선 유형", "기점", "종점", "배차간격", "막차 운행 여부", "금일 첫차 시간", "금일 막차 시간", "금일 저상 첫차 시간", "금일 저상 막차 시간", "운수사명"]
+    let postname : [String] = ["노선 ID", "노선명", "노선 길이(km)", "노선 유형", "기점", "종점", "배차간격(분)", "막차 운행 여부", "금일 첫차 시간", "금일 막차 시간", "금일 저상 첫차 시간", "금일 저상 막차 시간", "운수사명"]
     var posts : [String] = ["", "", "", "", "", "", "", "", "", "", "", "", ""]
     var element = NSString()
     
@@ -33,15 +34,23 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
     var lastLowTm = NSMutableString()
     var corpNm = NSMutableString()
     
-    func beginParsing()
-    {
-        posts = []
-        parser = XMLParser(contentsOf: (URL(string:url!))!)!
-        parser.delegate = self
-        parser.parse()
-        detailTableView!.reloadData()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.detailTableView.dataSource = self
+        self.detailTableView.delegate = self
+        
+        //beginParsing()
     }
     
+    /*func beginParsing()
+    {
+        posts = []
+        //parser = XMLParser(contentsOf: (URL(string:url!))!)!
+        //parser.delegate = self
+        //parser.parse()
+        detailTableView.reloadData()}
+
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String])
     {
         element = elementName as NSString
@@ -78,6 +87,9 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
         }
     }
     
+    var type = ""
+    var YN = ""
+    
     func parser(_ parser: XMLParser, foundCharacters string: String)
     {
         if element.isEqual(to: "busRouteId"){
@@ -87,7 +99,20 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
         } else if element.isEqual(to: "length"){
             length.append(string)
         } else if element.isEqual(to: "routeType"){
-            routeType.append(string)
+            switch (string) {
+            case "1": type = "공항"; break;
+            case "2": type = "마을"; break;
+            case "3": type = "간선"; break;
+            case "4": type = "지선"; break;
+            case "5": type = "순환"; break;
+            case "6": type = "광역"; break;
+            case "7": type = "인천"; break;
+            case "8": type = "경기"; break;
+            case "9": type = "폐지"; break;
+            case "0": type = "공용"; break;
+            default: break;
+            }
+            routeType.append(type)
         } else if element.isEqual(to: "stStationNm"){
             stStationNm.append(string)
         } else if element.isEqual(to: "edStationNm"){
@@ -95,7 +120,10 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
         } else if element.isEqual(to: "term"){
             term.append(string)
         } else if element.isEqual(to: "lastBusYn"){
-            lastBusYn.append(string)
+            if(string == ""){
+                YN = "No"
+            }
+            lastBusYn.append(YN)
         } else if element.isEqual(to: "firstBusTm"){
             firstBusTm.append(string)
         } else if element.isEqual(to: "lastBusTm"){
@@ -153,19 +181,15 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
                 posts[12] = corpNm as String
             }
         }
-    }
+    }*/
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        beginParsing()
-        // Do any additional setup after loading the view.
-    }
-    
+    // MARK: - Table view data source
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return posts.count
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return posts.count
@@ -173,13 +197,11 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BusCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BusInfoCell", for: indexPath)
         
-        cell.textLabel?.text = postname[indexPath.row]
-        cell.detailTextLabel?.text = posts[indexPath.row]
-
-        // Configure the cell...
-
+        cell.textLabel?.text = posts[indexPath.row]
+        cell.detailTextLabel?.text = postname[indexPath.row]
+        
         return cell
     }
     
