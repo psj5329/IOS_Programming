@@ -9,23 +9,48 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController,  MKMapViewDelegate {
+class MapViewController: UIViewController,  MKMapViewDelegate, XMLParserDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    
     var posts = NSMutableArray()
+    var parser = XMLParser()
+    var elements = NSMutableDictionary()
+    var element = NSString()
+    var busRouteId = NSMutableString()
+    var direction = NSMutableString()
+    var beginTm = NSMutableString()
+    var lastTm = NSMutableString()
+    var station = NSMutableString()
+    var stationNo = NSMutableString()
+    var stationNm = NSMutableString()
+    var transYn = NSMutableString()
+    var posX = NSMutableString()
+    var posY = NSMutableString()
     
     let regionRadius: CLLocationDistance = 5000
+    var initialLocation = CLLocation(latitude: 126.4337666326, longitude: 37.4661678512)
     
-    var url : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getRoutePath?serviceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
+    var url : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getStaionByRoute?serviceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let initialLocation = CLLocation(latitude: 37.5384514, longitude: 127.0709764)
-        centerMapOnLocation(location: initialLocation)
-        mapView.delegate = self
-        
+        beginParsing()
         loadInitialData()
+        
+        centerMapOnLocation(location: initialLocation)
+        
+        mapView.delegate = self
         mapView.addAnnotations(busStations)
+    }
+    
+    func beginParsing()
+    {
+        posts = []
+        parser = XMLParser(contentsOf: (URL(string:url))!)!
+        parser.delegate = self
+        parser.parse()
+        //SearchBusList.reloadData()
     }
     
     func centerMapOnLocation(location: CLLocation){
@@ -36,23 +61,41 @@ class MapViewController: UIViewController,  MKMapViewDelegate {
 
     var busStations : [BusStation] = []
     
+    /*func loadInitialData() {
+        for post in posts {
+            //busRouteId = (post as AnyObject).value(forKey: "busRouteId") as! String as! NSMutableString
+            //direction =  (post as AnyObject).value(forKey: "direction") as! String as! NSMutableString
+            beginTm =  (post as AnyObject).value(forKey: "beginTm") as! String as! NSMutableString
+            lastTm = (post as AnyObject).value(forKey: "lastTm") as! String as! NSMutableString
+            //station =  (post as AnyObject).value(forKey: "station") as! String as! NSMutableString
+            stationNm =  (post as AnyObject).value(forKey: "stationNm") as! String as! NSMutableString
+            stationNo =  (post as AnyObject).value(forKey: "stationNo") as! String as! NSMutableString
+            //transYn =  (post as AnyObject).value(forKey: "transYn") as! String as! NSMutableString
+            
+            posX = (post as AnyObject).value(forKey: "posX") as! String as! NSMutableString
+            posY = (post as AnyObject).value(forKey: "posY") as! String as! NSMutableString
+            let lat = (posX as NSString).doubleValue
+            let lon = (posY as NSString).doubleValue
+            let busStation = BusStation(stationNm: stationNm as String, stationNo: stationNo as String, beginTm: beginTm as String, lastTm: lastTm as String, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
+            busStations.append(busStation)
+            
+            initialLocation = CLLocation(latitude: lat, longitude: lon)
+        }
+    }*/
     func loadInitialData() {
         for post in posts {
-            let busRouteId: String = (post as AnyObject).value(forKey: "busRouteId") as! String
-            let direction: String =  (post as AnyObject).value(forKey: "direction") as! NSString as String
-            let beginTm: String =  (post as AnyObject).value(forKey: "beginTm") as! NSString as String
-            let lastTm: String = (post as AnyObject).value(forKey: "lastTm") as! NSString as String
-            let station: String =  (post as AnyObject).value(forKey: "station") as! NSString as String
-            let stationNm: String =  (post as AnyObject).value(forKey: "stationNm") as! NSString as String
-            let stationNo: String =  (post as AnyObject).value(forKey: "stationNo") as! NSString as String
-            let transYn: String =  (post as AnyObject).value(forKey: "transYn") as! NSString as String
-            
-            let XPos = (post as AnyObject).value(forKey: "XPos") as! NSString as String
-            let YPos = (post as AnyObject).value(forKey: "YPos") as! NSString as String
-            let lat = (YPos as NSString).doubleValue
-            let lon = (XPos as NSString).doubleValue
-            let busStation = BusStation(busRouteId: busRouteId, direction: direction, beginTm: beginTm, lastTm: lastTm, station: station, stationNm: stationNm, stationNo: stationNo, transYn: transYn, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
+            stationNo = (post as AnyObject).value(forKey: "stationNo") as! String as! NSMutableString
+            stationNm = (post as AnyObject).value(forKey: "stationNm") as! String as! NSMutableString
+            beginTm = (post as AnyObject).value(forKey: "beginTm") as! String as! NSMutableString
+            lastTm = (post as AnyObject).value(forKey: "lastTm") as! String as! NSMutableString
+            posX = (post as AnyObject).value(forKey: "posX") as! String as! NSMutableString
+            posY = (post as AnyObject).value(forKey: "posY") as! String as! NSMutableString
+            let lat = (posY as NSString).doubleValue
+            let lon = (posX as NSString).doubleValue
+            let busStation = BusStation(stationNm: stationNm as String, stationNo: stationNo as String, beginTm: beginTm as String, lastTm: lastTm as String, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
             busStations.append(busStation)
+            
+            initialLocation = CLLocation(latitude: lat, longitude: lon)
         }
     }
     

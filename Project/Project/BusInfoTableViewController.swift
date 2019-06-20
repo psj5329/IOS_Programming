@@ -12,7 +12,7 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
     
     @IBOutlet var detailTableView: UITableView!
     
-    //var url : String?
+    var url : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
     
     var parser = XMLParser()
     
@@ -40,15 +40,15 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
         self.detailTableView.dataSource = self
         self.detailTableView.delegate = self
         
-        //beginParsing()
+        beginParsing()
     }
     
-    /*func beginParsing()
+    func beginParsing()
     {
         posts = []
-        //parser = XMLParser(contentsOf: (URL(string:url!))!)!
-        //parser.delegate = self
-        //parser.parse()
+        parser = XMLParser(contentsOf: (URL(string:url))!)!
+        parser.delegate = self
+        parser.parse()
         detailTableView.reloadData()}
 
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String])
@@ -181,7 +181,7 @@ class BusInfoTableViewController: UITableViewController, XMLParserDelegate {
                 posts[12] = corpNm as String
             }
         }
-    }*/
+    }
     
     // MARK: - Table view data source
 

@@ -24,6 +24,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var busRouteNm = NSMutableString()
     var busRouteId = NSMutableString()
     var routeType = NSMutableString()
+    var stStationNm = NSMutableString()
+    var edStationNm = NSMutableString()
+    
+    var audioController: AudioController
     
     var busNum_utf8: String = ""
     
@@ -45,6 +49,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         parser.delegate = self
         parser.parse()
         SearchBusList.reloadData()
+        
+        let startX: CGFloat = ScreenWidth - 100
+        let startY: CGFloat = 100
+        let endY: CGFloat = ScreenHeight + 300
+        
+        let stars = StardustView(frame: CGRect(x: startX, y: startY, width: 10, height: 10))
+        self.view.addSubview(stars)
+        self.view.sendSubviewToBack(_: stars)
+        
+        UIView.animate(withDuration: 3.0, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {stars.center = CGPoint(x: startX, y: endY)}, completion: {(value:Bool) in stars.removeFromSuperview()})
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        audioController = AudioController()
+        audioController.preloadAudioEffects(audioFileNames: AudioEffectFiles)
+        
+        super.init(coder: aDecoder)
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
@@ -59,16 +80,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             busRouteId = ""
             routeType = NSMutableString()
             routeType = ""
+            stStationNm = ""
+            stStationNm = NSMutableString()
+            edStationNm = ""
+            edStationNm = NSMutableString()
         }
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         if element.isEqual(to: "busRouteNm") {
             busRouteNm.append(string)
-        }  else if element.isEqual(to: "busRouteId"){
+        } else if element.isEqual(to: "busRouteId"){
             busRouteId.append(string)
         } else if element.isEqual(to: "routeType"){
             routeType.append(string)
+        } else if element.isEqual(to: "stStationNm"){
+            stStationNm.append(string)
+        } else if element.isEqual(to: "edStationNm"){
+            edStationNm.append(string)
         }
     }
     
@@ -82,6 +111,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             if !routeType.isEqual(nil){
                 elements.setObject(routeType, forKey: "routeType" as NSCopying)
+            }
+            if !stStationNm.isEqual(nil){
+                elements.setObject(stStationNm, forKey: "stStationNm" as NSCopying)
+            }
+            if !edStationNm.isEqual(nil){
+                elements.setObject(edStationNm, forKey: "edStationNm" as NSCopying)
             }
             
             posts.add(elements)
@@ -159,7 +194,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             beginParsing()
             SearchBusList.reloadData()
         }
-        
     }
     
     // 입력 시작과 동시에 검색모드 취소(x)할 수 잇게 함
@@ -180,6 +214,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             strurl = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?ServiceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
             self.searchbar.showsCancelButton = true
             beginParsing()
+            audioController.playerEffect(name: SoundWin)
+            
+            let startX: CGFloat = ScreenWidth - 100
+            let startY: CGFloat = 100
+            let endY: CGFloat = ScreenHeight + 300
+            
+            let stars = StardustView(frame: CGRect(x: startX, y: startY, width: 10, height: 10))
+            self.view.addSubview(stars)
+            self.view.sendSubviewToBack(_: stars)
+            
+            UIView.animate(withDuration: 3.0, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {stars.center = CGPoint(x: startX, y: endY)}, completion: {(value:Bool) in stars.removeFromSuperview()})
         }
 
     }
@@ -189,6 +234,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.searchbar.showsCancelButton = false
         self.searchbar.text = ""
         self.searchbar.resignFirstResponder()
+        audioController.playerEffect(name: SoundDing)
     }
     
     // 키보드의 검색이나 돋보기 아이콘 누르면 호출
@@ -207,6 +253,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.searchbar.resignFirstResponder()
         
         beginParsing()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -215,8 +262,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     let indexPath = SearchBusList.indexPath(for: cell)
                     if let busInfoViewController = segue.destination as? BusInfoViewController{
                         let busNum = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "busRouteNm")as! NSString as String
-                        busNum_utf8 = busNum.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-                        busInfoViewController.url = url + "&strSrch=" + busNum_utf8
+                        busInfoViewController.busRouteNm = busNum
+                        
+                        //busNum_utf8 = busNum.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+                        //busInfoViewController.urlStation = busInfoViewController.url + "&strSrch=" + busNum_utf8
+                        
+                        
+                        let busId = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "busRouteId")as! NSString as String
+                        busInfoViewController.busRouteId = busId
+                        
+                        busInfoViewController.urlStation = busInfoViewController.url + "&busRouteId=" + busId
+                        
+                        let stStation = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "stStationNm")as! NSString as String
+                        busInfoViewController.stStationNm = stStation
+                        let edStation = (posts.object(at: (indexPath?.row)!) as AnyObject).value(forKey: "edStationNm")as! NSString as String
+                        busInfoViewController.edStationNm = edStation
+                        
+                        
                 }
             }
         }

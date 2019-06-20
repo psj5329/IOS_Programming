@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="urC-eT-wJC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oAt-ZP-mDp">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -226,7 +226,7 @@
         <!--정류장 정보-->
         <scene sceneID="Nv9-DF-8Cz">
             <objects>
-                <viewController title="정류장 정보" id="VVb-uf-yBy" sceneMemberID="viewController">
+                <viewController title="정류장 정보" id="VVb-uf-yBy" customClass="StationInfoViewController" customModule="Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xqm-eN-6tf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -236,7 +236,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StationInfo" textLabel="c8C-Ct-L9u" detailTextLabel="izW-ST-6vt" style="IBUITableViewCellStyleSubtitle" id="X3Q-YU-5FL">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StationInfoCell" textLabel="c8C-Ct-L9u" detailTextLabel="izW-ST-6vt" style="IBUITableViewCellStyleSubtitle" id="X3Q-YU-5FL">
                                         <rect key="frame" x="0.0" y="28" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X3Q-YU-5FL" id="aok-Yi-SlK">
@@ -262,40 +262,33 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&lt;-&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ejl-6B-bHO">
-                                <rect key="frame" x="173" y="115" width="29" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(종점지)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AcG-3P-EbC">
-                                <rect key="frame" x="209" y="116" width="150" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NY9-zA-8cO">
                                 <rect key="frame" x="171" y="145" width="32" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="지도"/>
                                 <connections>
-                                    <segue destination="lY4-3o-JMA" kind="show" id="YqO-CM-NP8"/>
+                                    <segue destination="lY4-3o-JMA" kind="show" identifier="segueToStationMapView" id="YqO-CM-NP8"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(정류장 이름)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4M-Px-pRp">
-                                <rect key="frame" x="137" y="87" width="100" height="21"/>
+                                <rect key="frame" x="87" y="87" width="200" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(출발지)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vL-ph-X1G">
-                                <rect key="frame" x="16" y="116" width="150" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(정류장 번호)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JyY-uP-ZdR">
+                                <rect key="frame" x="137" y="66" width="100" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(다음 정류장)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AcG-3P-EbC">
+                                <rect key="frame" x="97" y="116" width="180" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -303,15 +296,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Iad-4i-dCr"/>
                     </view>
+                    <connections>
+                        <outlet property="detailTableView" destination="hVt-vj-pDv" id="yZo-gt-MYN"/>
+                        <outlet property="stationEnd" destination="AcG-3P-EbC" id="zB0-dG-vdA"/>
+                        <outlet property="stationName" destination="w4M-Px-pRp" id="8kS-xE-2Sc"/>
+                        <outlet property="stationNum" destination="JyY-uP-ZdR" id="rgF-eK-6vy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bm5-ld-9jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5192.8000000000002" y="447.52623688155927"/>
+            <point key="canvasLocation" x="5194" y="448"/>
         </scene>
         <!--정류장 지도-->
         <scene sceneID="2qP-CU-n9X">
             <objects>
-                <viewController title="정류장 지도" id="lY4-3o-JMA" sceneMemberID="viewController">
+                <viewController title="정류장 지도" id="lY4-3o-JMA" customClass="StationMapViewController" customModule="Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7he-ne-TAR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -324,10 +323,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="kCa-9K-azT"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="41I-4I-9vt" id="tLi-cA-hhs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPp-zs-86E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6044" y="447.52623688155927"/>
+            <point key="canvasLocation" x="6044" y="448"/>
         </scene>
         <!--노선 지도-->
         <scene sceneID="S46-qu-C6e">
@@ -371,10 +373,56 @@
             </objects>
             <point key="canvasLocation" x="4511" y="-564"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--View Controller-->
+        <scene sceneID="m3Q-J1-Nav">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G2F-JU-az2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="7UZ-Hs-xW9" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rLP-ix-O1C">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="테스트용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evh-V6-X7O">
+                                <rect key="frame" x="132" y="305" width="111" height="57"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="HZh-Ol-Oax"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UT3-nj-Elp">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="29I-SV-Zig"/>
+                    </navigationItem>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="3750" y="448"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="mfk-3a-bNT">
+            <objects>
+                <tabBarController id="oAt-ZP-mDp" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9mp-sr-7nq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="7Zs-Xb-Su3" kind="relationship" relationship="viewControllers" id="5dM-OG-sVT"/>
+                        <segue destination="urC-eT-wJC" kind="relationship" relationship="viewControllers" id="zR3-m0-7WY"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gnF-qx-3uT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2103" y="10"/>
+        </scene>
+        <!--서치바 검색-->
         <scene sceneID="1lb-Is-Z9U">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="urC-eT-wJC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="서치바 검색" id="0Ie-Q5-LQ1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="X7m-qb-x8g">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -389,8 +437,27 @@
             </objects>
             <point key="canvasLocation" x="3076" y="-564"/>
         </scene>
+        <!--Item 2-->
+        <scene sceneID="0Gs-pO-WlC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7Zs-Xb-Su3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item 2" id="UCx-Ri-KTK"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hjr-Gg-MhN">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7UZ-Hs-xW9" kind="relationship" relationship="rootViewController" id="w8X-lh-1yX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="faD-wf-9dj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3076" y="447.52623688155927"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NTi-KN-ba2"/>
+        <segue reference="aJ8-s5-r1z"/>
     </inferredMetricsTieBreakers>
 </document>

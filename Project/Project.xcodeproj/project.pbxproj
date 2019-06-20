@@ -9,27 +9,49 @@
 /* Begin PBXBuildFile section */
 		A1044A5722B6A5E50035BC92 /* busStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1044A5622B6A5E50035BC92 /* busStation.swift */; };
 		A1044A5922B6DCB90035BC92 /* BusInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1044A5822B6DCB90035BC92 /* BusInfoTableViewController.swift */; };
+		A1044A5B22B7412E0035BC92 /* StationMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1044A5A22B7412E0035BC92 /* StationMapViewController.swift */; };
 		A104FE7A229AB40C0068CCB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104FE79229AB40C0068CCB1 /* AppDelegate.swift */; };
 		A104FE7C229AB40C0068CCB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104FE7B229AB40C0068CCB1 /* ViewController.swift */; };
 		A104FE7F229AB40C0068CCB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A104FE7D229AB40C0068CCB1 /* Main.storyboard */; };
-		A104FE81229AB40C0068CCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A104FE80229AB40C0068CCB1 /* Assets.xcassets */; };
 		A104FE84229AB40C0068CCB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A104FE82229AB40C0068CCB1 /* LaunchScreen.storyboard */; };
 		A10668B122A4629400BA0818 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10668B022A4629400BA0818 /* MapViewController.swift */; };
 		A10668B522A4796D00BA0818 /* BusInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10668B422A4796D00BA0818 /* BusInfoViewController.swift */; };
+		A1828A6E22BAC3BE00E33B90 /* StationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1828A6D22BAC3BE00E33B90 /* StationInfoViewController.swift */; };
+		A1828A7022BB2A3E00E33B90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1828A6F22BB2A3E00E33B90 /* Assets.xcassets */; };
+		A1828A7722BB302E00E33B90 /* Comic_Andy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1828A7122BB302D00E33B90 /* Comic_Andy.ttf */; };
+		A1828A7822BB302E00E33B90 /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = A1828A7222BB302D00E33B90 /* particle.png */; };
+		A1828A7922BB302E00E33B90 /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1828A7322BB302D00E33B90 /* ding.mp3 */; };
+		A1828A7A22BB302E00E33B90 /* win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1828A7422BB302D00E33B90 /* win.mp3 */; };
+		A1828A7B22BB302E00E33B90 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1828A7522BB302E00E33B90 /* Config.swift */; };
+		A1828A7C22BB302E00E33B90 /* wrong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A1828A7622BB302E00E33B90 /* wrong.m4a */; };
+		A1828A8022BB30B700E33B90 /* ExplodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1828A7D22BB30B700E33B90 /* ExplodeView.swift */; };
+		A1828A8122BB30B700E33B90 /* StardustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1828A7E22BB30B700E33B90 /* StardustView.swift */; };
+		A1828A8222BB30B700E33B90 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1828A7F22BB30B700E33B90 /* AudioController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A1044A5622B6A5E50035BC92 /* busStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = busStation.swift; sourceTree = "<group>"; };
 		A1044A5822B6DCB90035BC92 /* BusInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusInfoTableViewController.swift; sourceTree = "<group>"; };
+		A1044A5A22B7412E0035BC92 /* StationMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationMapViewController.swift; sourceTree = "<group>"; };
 		A104FE76229AB40C0068CCB1 /* Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A104FE79229AB40C0068CCB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A104FE7B229AB40C0068CCB1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A104FE7E229AB40C0068CCB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A104FE80229AB40C0068CCB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A104FE83229AB40C0068CCB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A104FE85229AB40C0068CCB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10668B022A4629400BA0818 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A10668B422A4796D00BA0818 /* BusInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusInfoViewController.swift; sourceTree = "<group>"; };
+		A1828A6D22BAC3BE00E33B90 /* StationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfoViewController.swift; sourceTree = "<group>"; };
+		A1828A6F22BB2A3E00E33B90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1828A7122BB302D00E33B90 /* Comic_Andy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comic_Andy.ttf; sourceTree = "<group>"; };
+		A1828A7222BB302D00E33B90 /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
+		A1828A7322BB302D00E33B90 /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
+		A1828A7422BB302D00E33B90 /* win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = win.mp3; sourceTree = "<group>"; };
+		A1828A7522BB302E00E33B90 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A1828A7622BB302E00E33B90 /* wrong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = wrong.m4a; sourceTree = "<group>"; };
+		A1828A7D22BB30B700E33B90 /* ExplodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplodeView.swift; sourceTree = "<group>"; };
+		A1828A7E22BB30B700E33B90 /* StardustView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StardustView.swift; sourceTree = "<group>"; };
+		A1828A7F22BB30B700E33B90 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,16 +84,27 @@
 		A104FE78229AB40C0068CCB1 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				A1828A7F22BB30B700E33B90 /* AudioController.swift */,
+				A1828A7D22BB30B700E33B90 /* ExplodeView.swift */,
+				A1828A7E22BB30B700E33B90 /* StardustView.swift */,
+				A1828A7122BB302D00E33B90 /* Comic_Andy.ttf */,
+				A1828A7522BB302E00E33B90 /* Config.swift */,
+				A1828A7322BB302D00E33B90 /* ding.mp3 */,
+				A1828A7222BB302D00E33B90 /* particle.png */,
+				A1828A7422BB302D00E33B90 /* win.mp3 */,
+				A1828A7622BB302E00E33B90 /* wrong.m4a */,
+				A1828A6F22BB2A3E00E33B90 /* Assets.xcassets */,
 				A104FE79229AB40C0068CCB1 /* AppDelegate.swift */,
 				A104FE7B229AB40C0068CCB1 /* ViewController.swift */,
 				A104FE7D229AB40C0068CCB1 /* Main.storyboard */,
-				A104FE80229AB40C0068CCB1 /* Assets.xcassets */,
 				A104FE82229AB40C0068CCB1 /* LaunchScreen.storyboard */,
 				A104FE85229AB40C0068CCB1 /* Info.plist */,
 				A10668B022A4629400BA0818 /* MapViewController.swift */,
 				A10668B422A4796D00BA0818 /* BusInfoViewController.swift */,
 				A1044A5622B6A5E50035BC92 /* busStation.swift */,
 				A1044A5822B6DCB90035BC92 /* BusInfoTableViewController.swift */,
+				A1044A5A22B7412E0035BC92 /* StationMapViewController.swift */,
+				A1828A6D22BAC3BE00E33B90 /* StationInfoViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -134,8 +167,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1828A7822BB302E00E33B90 /* particle.png in Resources */,
+				A1828A7722BB302E00E33B90 /* Comic_Andy.ttf in Resources */,
+				A1828A7A22BB302E00E33B90 /* win.mp3 in Resources */,
+				A1828A7922BB302E00E33B90 /* ding.mp3 in Resources */,
 				A104FE84229AB40C0068CCB1 /* LaunchScreen.storyboard in Resources */,
-				A104FE81229AB40C0068CCB1 /* Assets.xcassets in Resources */,
+				A1828A7022BB2A3E00E33B90 /* Assets.xcassets in Resources */,
+				A1828A7C22BB302E00E33B90 /* wrong.m4a in Resources */,
 				A104FE7F229AB40C0068CCB1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,12 +185,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1044A5B22B7412E0035BC92 /* StationMapViewController.swift in Sources */,
 				A1044A5922B6DCB90035BC92 /* BusInfoTableViewController.swift in Sources */,
+				A1828A7B22BB302E00E33B90 /* Config.swift in Sources */,
 				A104FE7C229AB40C0068CCB1 /* ViewController.swift in Sources */,
 				A104FE7A229AB40C0068CCB1 /* AppDelegate.swift in Sources */,
 				A10668B122A4629400BA0818 /* MapViewController.swift in Sources */,
+				A1828A8022BB30B700E33B90 /* ExplodeView.swift in Sources */,
 				A1044A5722B6A5E50035BC92 /* busStation.swift in Sources */,
 				A10668B522A4796D00BA0818 /* BusInfoViewController.swift in Sources */,
+				A1828A8122BB30B700E33B90 /* StardustView.swift in Sources */,
+				A1828A8222BB30B700E33B90 /* AudioController.swift in Sources */,
+				A1828A6E22BAC3BE00E33B90 /* StationInfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,10 +349,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = kpu.2019class.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -323,10 +368,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = kpu.2019class.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
