@@ -28,7 +28,7 @@ class MapViewController: UIViewController,  MKMapViewDelegate, XMLParserDelegate
     var posY = NSMutableString()
     
     let regionRadius: CLLocationDistance = 5000
-    var initialLocation = CLLocation(latitude: 126.4337666326, longitude: 37.4661678512)
+    var initialLocation = CLLocation(latitude: 37.4661678512, longitude: 126.4337666326 )
     
     var url : String = "http://ws.bus.go.kr/api/rest/busRouteInfo/getStaionByRoute?serviceKey=cO%2FgfssMFJwbeb6AJkxR1QzaSAtqPrpkZr887lmaOnjLhYAuF4KCZgL9TUNI5DWXv0EQ5xA3nbWi9adgvFsGLw%3D%3D"
     
